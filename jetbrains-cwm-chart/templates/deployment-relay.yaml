@@ -2,14 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.relay.name }}
-  labels:
-    app: {{ .Values.relay.name }}
 spec:
   replicas: {{ .Values.relay.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Values.relay.name }}
   template:
+    metadata:
+      labels:
+        app: {{ .Values.relay.name }}
     spec:
       containers:
         - name: {{ .Values.relay.name }}
@@ -23,12 +24,13 @@ spec:
             {{- toYaml .Values.relay.resources | nindent 12 }}
           env:
             - name: THING
-              value: RELAY
+              value: "RELAY"
             - name: RELAY_ADDR
               value: "127.0.0.1:4099"
             - name: PROMETHEUS_ADDR
               value: "127.0.0.1:4422"
             - name: ALLOW_SERVER_WITHOUT_AUTH
-#              value: "-allow-server-without-authentication"
-              value: "JWT_KEY_FILE"
-            - name: "/lobby_public.pem"
+              # value: "-allow-server-without-authentication"
+              value: ""
+            - name: "JWT_KEY_FILE"
+              value: "/lobby_public.pem"

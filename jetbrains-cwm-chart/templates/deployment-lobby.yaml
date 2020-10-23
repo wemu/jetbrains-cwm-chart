@@ -2,14 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.lobby.name }}
-  labels:
-    app: {{ .Values.lobby.name }}
 spec:
   replicas: {{ .Values.lobby.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Values.lobby.name }}
   template:
+    metadata:
+      labels:
+        app: "{{ .Values.lobby.name }}"
     spec:
       containers:
         - name: {{ .Values.lobby.name }}
@@ -23,7 +24,7 @@ spec:
             {{- toYaml .Values.lobby.resources | nindent 12 }}
           env:
             - name: THING
-              value: LOBBY
+              value: "LOBBY"
             - name: SERVER_PORT
               value: "8443"
             - name: DIAGNOSTICS_PORT
@@ -33,8 +34,8 @@ spec:
             - name: RELAYS_ECDSA_JWT_KEY_FILE
               value: "{{ .Values.lobby.keyFile }}"
             - name: REDIS_HOST
-              value: {{ .Values.redis.name }}
+              value: "{{ .Values.redis.name }}"
             - name: REDIS_PORT
-              value: {{ .Values.redis.service.port }}
+              value: "{{ .Values.redis.service.port }}"
             - name: ENABLED_FEATURES
               value: "p2p_quic,direct_tcp,ws_relay"
