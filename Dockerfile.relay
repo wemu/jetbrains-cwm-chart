@@ -1,0 +1,15 @@
+FROM alpine:latest
+
+ARG BUILD_DIR="./build"
+
+COPY "${BUILD_DIR}/relay/ws-relayd" /ws-relayd
+COPY "${BUILD_DIR}/relay/lobby_public.pem" /lobby_public.pem
+
+RUN chmod +x /ws-relayd
+
+ENV RELAY_ADDR=127.0.0.1:4099
+ENV PROMETHEUS_ADDR=127.0.0.1:4422
+ENV ALLOW_SERVER_WITHOUT_AUTH="-allow-server-without-authentication"
+ENV JWT_KEY_FILE=/lobby_public.pem
+
+CMD /ws-relayd -addr $RELAY_ADDR -prometheusAddr $PROMETHEUS_ADDR -jwtKeyType ecdsa -jwtKeyFile $JWT_KEY_FILE $ALLOW_SERVER_WITHOUT_AUTH

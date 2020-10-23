@@ -1,0 +1,40 @@
+lobby:
+  name: jetbrains-cwm-lobby
+  replicaCount: 1
+  image: jetbrains/cwm/lobby
+  tag: latest
+  pullPolicy: Always
+  keyFile: "/home/lobby-server/lobby_private.pem"
+  service:
+    type: NodePort
+    port: 80
+  resources: {}
+
+relay:
+  name: jetbrains-cwm-relay
+  replicaCount: 1
+  image: jetbrains/cwm/relay
+  tag: latest
+  pullPolicy: Always
+  jwtKeyFile: "/lobby_public.pem"
+  service:
+    type: NodePort
+    port: 80
+  resources: {}
+
+redis:
+  name: jetbrains-cwm-redis
+  replicaCount: 1
+  image: redis
+  tag: latest
+  pullPolicy: Always
+  service:
+    type: NodePort
+    port: 6379
+    targetPort: 6379
+  resources: {}
+
+ingress:
+  name: jetbrains-cwm
+  hosts: chart-example.local
+  path:

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.relay.name }}
+  labels:
+    app: {{ .Values.relay.name }}
+spec:
+  replicas: {{ .Values.relay.replicaCount }}
+  template:
+    spec:
+      containers:
+        - name: {{ .Values.relay.name }}
+          image: "{{ .Values.relay.image }}:{{ .Values.relay.tag }}"
+          imagePullPolicy: {{ .Values.relay.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.relay.resources | nindent 12 }}
+          env:
+            - name: THING
+              value: RELAY
+            - name: RELAY_ADDR
+              value: "127.0.0.1:4099"
+            - name: PROMETHEUS_ADDR
+              value: "127.0.0.1:4422"
+            - name: ALLOW_SERVER_WITHOUT_AUTH
+#              value: "-allow-server-without-authentication"
+              value: "JWT_KEY_FILE"
+            - name: "/lobby_public.pem"

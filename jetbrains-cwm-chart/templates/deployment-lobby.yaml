@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.lobby.name }}
+  labels:
+    app: {{ .Values.lobby.name }}
+spec:
+  replicas: {{ .Values.lobby.replicaCount }}
+  template:
+    spec:
+      containers:
+        - name: {{ .Values.lobby.name }}
+          image: "{{ .Values.lobby.image }}:{{ .Values.lobby.tag }}"
+          imagePullPolicy: {{ .Values.lobby.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.lobby.resources | nindent 12 }}
+          env:
+            - name: THING
+              value: LOBBY
+            - name: SERVER_PORT
+              value: "8443"
+            - name: DIAGNOSTICS_PORT
+              value: "8880"
+            - name: FORCE_RELAY_URI
+              value: "http://{{ .Values.relay.name }}"
+            - name: RELAYS_ECDSA_JWT_KEY_FILE
+              value: "{{ .Values.lobby.keyFile }}"
+            - name: REDIS_HOST
+              value: {{ .Values.redis.name }}
+            - name: REDIS_PORT
+              value: {{ .Values.redis.service.port }}
+            - name: ENABLED_FEATURES
+              value: "p2p_quic,direct_tcp,ws_relay"
