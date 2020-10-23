@@ -12,9 +12,43 @@ Cause:
 
 ## Instructions
 
-1. create a namespace in kubernetes (1.18+)
-1. create a stage-test-values.yaml file and adjust the defaults from values.yaml
-1. use [helm](https://helm.sh) to deploy this chart to kubernetes
+create a namespace in kubernetes (1.18+), in this example: "cwm"
+
+```shell script
+$ kubectl create ns cwm
+```
+
+```shell script
+$ cd jetbrains-cwm-chart
+```
+
+create a stage-values.yaml file and adjust the defaults from values.yaml
+then check if the values are as expected:
+
+```shell script
+$ helm template . -f stage-values.yaml
+```
+
+then use [helm](https://helm.sh) to deploy this chart to kubernetes
+
+```shell script
+$ helm install cwm-release . -f stage-values.yaml -n cwm
+```
+
+## Checking what's going on using the [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+
+```shell script
+# install kubedash
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
+# retrieve login token
+$ kubectl -n kube-system describe secret default
+
+# start proxy to access kubedash (stays running, new terminal)
+$ kubectl proxy
+```
+
+Go to [Kubedash on Localhost](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/).
 
 
 ## Site-Seeing:

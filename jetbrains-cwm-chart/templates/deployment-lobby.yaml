@@ -6,6 +6,9 @@ metadata:
     app: {{ .Values.lobby.name }}
 spec:
   replicas: {{ .Values.lobby.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.lobby.name }}
   template:
     spec:
       containers:

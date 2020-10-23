@@ -6,6 +6,9 @@ metadata:
     app: {{ .Values.relay.name }}
 spec:
   replicas: {{ .Values.relay.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.relay.name }}
   template:
     spec:
       containers:

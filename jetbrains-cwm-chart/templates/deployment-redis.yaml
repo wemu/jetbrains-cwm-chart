@@ -6,6 +6,9 @@ metadata:
     app: {{ .Values.redis.name }}
 spec:
   replicas: {{ .Values.redis.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.redis.name }}
   template:
     spec:
       containers:
