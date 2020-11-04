@@ -12,4 +12,4 @@ ENV PROMETHEUS_ADDR=127.0.0.1:4422
 ENV ALLOW_SERVER_WITHOUT_AUTH="-allow-server-without-authentication"
 ENV JWT_KEY_FILE=/lobby_public.pem
 
-CMD /ws-relayd -addr $RELAY_ADDR -prometheusAddr $PROMETHEUS_ADDR -jwtKeyType ecdsa -jwtKeyFile $JWT_KEY_FILE $ALLOW_SERVER_WITHOUT_AUTH
+CMD /ws-relayd -addr $RELAY_ADDR -prometheus-addr $PROMETHEUS_ADDR -jwt-key-type ecdsa -jwt-key-file $JWT_KEY_FILE $ALLOW_SERVER_WITHOUT_AUTH

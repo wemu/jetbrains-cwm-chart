@@ -7,8 +7,12 @@ lobby:
   keyFile: "/home/lobby-server/lobby_private.pem"
   service:
     type: NodePort
-    port: 80
+    port: 443
   resources: {}
+  ingress:
+    name: jetbrains-cwm-lobby
+    host: cwm-lobby-test.local
+    path: /
 
 relay:
   name: jetbrains-cwm-relay
@@ -19,8 +23,12 @@ relay:
   jwtKeyFile: "/lobby_public.pem"
   service:
     type: NodePort
-    port: 80
+    port: 443
   resources: {}
+  ingress:
+    name: jetbrains-cwm-relay
+    host: cwm-relay-test.local
+    path: /
 
 redis:
   name: jetbrains-cwm-redis
@@ -34,7 +42,3 @@ redis:
     targetPort: 6379
   resources: {}
 
-ingress:
-  name: jetbrains-cwm
-  hosts: chart-example.local
-  path:

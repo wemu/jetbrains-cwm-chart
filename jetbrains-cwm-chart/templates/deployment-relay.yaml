@@ -17,8 +17,7 @@ spec:
           image: "{{ .Values.relay.image }}:{{ .Values.relay.tag }}"
           imagePullPolicy: {{ .Values.relay.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
+            - containerPort: 8099
               protocol: TCP
           resources:
             {{- toYaml .Values.relay.resources | nindent 12 }}

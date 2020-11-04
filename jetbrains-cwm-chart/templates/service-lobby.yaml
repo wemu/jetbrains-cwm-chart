@@ -6,8 +6,8 @@ spec:
   type: {{ .Values.lobby.service.type }}
   ports:
     - port: {{ .Values.lobby.service.port }}
-      targetPort: http
+      targetPort: 8443
       protocol: TCP
-      name: http
+      name: https
   selector:
     app: {{ .Values.lobby.name }}

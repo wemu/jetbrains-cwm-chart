@@ -17,8 +17,7 @@ spec:
           image: "{{ .Values.lobby.image }}:{{ .Values.lobby.tag }}"
           imagePullPolicy: {{ .Values.lobby.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
+            - containerPort: 8443
               protocol: TCP
           resources:
             {{- toYaml .Values.lobby.resources | nindent 12 }}
@@ -30,7 +29,7 @@ spec:
             - name: DIAGNOSTICS_PORT
               value: "8880"
             - name: FORCE_RELAY_URI
-              value: "http://{{ .Values.relay.name }}"
+              value: "wss://{{ .Values.relay.ingress.host }}"
             - name: RELAYS_ECDSA_JWT_KEY_FILE
               value: "{{ .Values.lobby.keyFile }}"
             - name: REDIS_HOST
@@ -39,3 +38,5 @@ spec:
               value: "{{ .Values.redis.service.port }}"
             - name: ENABLED_FEATURES
               value: "p2p_quic,direct_tcp,ws_relay"
+            - name: BASE_URL
+              value: "https://{{ .Values.lobby.ingress.host }}"

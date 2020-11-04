@@ -25,7 +25,8 @@ if [ -f "${BUILD_DIR}/${RELAY_SERVER_FILE}" ]; then
     echo "Relay Server file exists"
 else
     echo "Downloading Relay Server file..."
-    wget -q -O ${BUILD_DIR}/relay/${RELAY_SERVER_FILE} https://download.jetbrains.com/idea/code-with-me/backend/20201008T113700Z/ws-relayd1032?_ga=2.52704298.381351510.1603426577-1724742732.1601578118
+    wget -q -O ${BUILD_DIR}/${RELAY_SERVER_FILE} https://download.jetbrains.com/idea/code-with-me/backend/20201008T113700Z/ws-relayd1032?_ga=2.52704298.381351510.1603426577-1724742732.1601578118
+    cp ${BUILD_DIR}/${RELAY_SERVER_FILE} ${BUILD_DIR}/relay/${RELAY_SERVER_FILE}
 fi
 
 if [[ -f "${BUILD_DIR}/lobby/lobby_private.pem" || -f "${BUILD_DIR}/relay/lobby_public.pem" ]]; then
