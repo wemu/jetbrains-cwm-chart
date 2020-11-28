@@ -30,7 +30,7 @@ relay:
   ingress:
     name: jetbrains-cwm-relay
     host: cwm-relay-test.local
-    path: ""
+    path: "/"
 
 redis:
   name: jetbrains-cwm-redis
