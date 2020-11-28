@@ -6,7 +6,7 @@ spec:
   type: {{ .Values.relay.service.type }}
   ports:
     - port: {{ .Values.relay.service.port }}
-      targetPort: 8099
+      targetPort: {{ .Values.relay.port }}
       protocol: TCP
       name: https
   selector:

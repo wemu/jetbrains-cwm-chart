@@ -5,4 +5,5 @@ build/
 
 .DS_Store
 
-stage-values.yaml
+# ignore environment specific values ("test", "preprod", "prod", etc)
+/jetbrains-cwm-chart/values-*.yaml

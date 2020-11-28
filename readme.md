@@ -12,28 +12,39 @@ Cause:
 
 ## Instructions
 
-create a namespace in kubernetes (1.18+), in this example: "cwm"
+create a namespace in kubernetes (1.18+), in this example: "jetbrains-cwm-test"
 
 ```shell script
-$ kubectl create ns cwm
+$ kubectl create ns jetbrains-cwm-test
 ```
 
 ```shell script
 $ cd jetbrains-cwm-chart
 ```
 
-create a stage-values.yaml file and adjust the defaults from values.yaml
+create a values-stage.yaml file and adjust the defaults from values.yaml (stage intended to be "test" or "preprod" or "prod" etc)
 then check if the values are as expected:
 
 ```shell script
-$ helm template . -f stage-values.yaml
+$ helm template . -f values-stage.yaml
 ```
 
 then use [helm](https://helm.sh) to deploy this chart to kubernetes
 
 ```shell script
-$ helm install cwm-release . -f stage-values.yaml -n cwm
+$ helm install cwm-release . -f values-stage.yaml -n jetbrains-cwm-test
 ```
+
+## Helm Notes
+
+```shell
+# List all releases in this namespace
+helm list -n jetbrains-cwm-test
+
+# Upgrade Release / Deployment
+$ helm upgrade cwm-release . -f values-test.yaml -n jetbrains-cwm-test
+```
+
 
 ## Checking what's going on using the [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
 

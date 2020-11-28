@@ -5,6 +5,7 @@ lobby:
   tag: latest
   pullPolicy: Always
   keyFile: "/home/lobby-server/lobby_private.pem"
+  port: 8080
   service:
     type: NodePort
     port: 443
@@ -12,7 +13,7 @@ lobby:
   ingress:
     name: jetbrains-cwm-lobby
     host: cwm-lobby-test.local
-    path: /
+    path: "/"
 
 relay:
   name: jetbrains-cwm-relay
@@ -21,6 +22,7 @@ relay:
   tag: latest
   pullPolicy: Always
   jwtKeyFile: "/lobby_public.pem"
+  port: 8080
   service:
     type: NodePort
     port: 443
@@ -28,7 +30,7 @@ relay:
   ingress:
     name: jetbrains-cwm-relay
     host: cwm-relay-test.local
-    path: /
+    path: ""
 
 redis:
   name: jetbrains-cwm-redis

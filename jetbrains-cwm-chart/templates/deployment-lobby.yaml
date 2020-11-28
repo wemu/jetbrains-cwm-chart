@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.lobby.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.lobby.name }}
+    app.kubernetes.io/managed-by: helm
+    app: {{ .Values.lobby.name }}
 spec:
   replicas: {{ .Values.lobby.replicaCount }}
   selector:
@@ -10,22 +14,24 @@ spec:
   template:
     metadata:
       labels:
-        app: "{{ .Values.lobby.name }}"
+        app: {{ .Values.lobby.name }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8880"
+        prometheus.io/scheme: "http"
     spec:
       containers:
         - name: {{ .Values.lobby.name }}
           image: "{{ .Values.lobby.image }}:{{ .Values.lobby.tag }}"
           imagePullPolicy: {{ .Values.lobby.pullPolicy }}
           ports:
-            - containerPort: 8443
+            - containerPort: {{ .Values.lobby.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.lobby.resources | nindent 12 }}
           env:
-            - name: THING
-              value: "LOBBY"
             - name: SERVER_PORT
-              value: "8443"
+              value: "{{ .Values.lobby.port }}"
             - name: DIAGNOSTICS_PORT
               value: "8880"
             - name: FORCE_RELAY_URI

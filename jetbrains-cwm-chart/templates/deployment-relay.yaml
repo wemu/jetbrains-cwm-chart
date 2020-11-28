@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.relay.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.relay.name }}
+    app.kubernetes.io/managed-by: helm
+    app: {{ .Values.relay.name }}
 spec:
   replicas: {{ .Values.relay.replicaCount }}
   selector:
@@ -11,21 +15,23 @@ spec:
     metadata:
       labels:
         app: {{ .Values.relay.name }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "4422"
+        prometheus.io/scheme: "http"
     spec:
       containers:
         - name: {{ .Values.relay.name }}
           image: "{{ .Values.relay.image }}:{{ .Values.relay.tag }}"
           imagePullPolicy: {{ .Values.relay.pullPolicy }}
           ports:
-            - containerPort: 8099
+            - containerPort: {{ .Values.relay.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.relay.resources | nindent 12 }}
           env:
-            - name: THING
-              value: "RELAY"
             - name: RELAY_ADDR
-              value: "127.0.0.1:4099"
+              value: "127.0.0.1:{{ .Values.relay.port }}"
             - name: PROMETHEUS_ADDR
               value: "127.0.0.1:4422"
             - name: ALLOW_SERVER_WITHOUT_AUTH
