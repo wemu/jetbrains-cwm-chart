@@ -1,13 +1,16 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Values.lobby.ingress.name }}
 spec:
   rules:
     - host: {{ .Values.lobby.ingress.host | quote }}
-      http:
+    - http:
         paths:
           - path: {{ .Values.lobby.ingress.path | quote }}
+            pathType: Prefix
             backend:
-              serviceName: {{ .Values.lobby.name }}
-              servicePort: https
+              service:
+                name: {{ .Values.lobby.name }}
+                port:
+                  number: {{ .Values.lobby.service.port }}

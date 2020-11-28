@@ -1,13 +1,16 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Values.relay.ingress.name }}
 spec:
   rules:
     - host: {{ .Values.relay.ingress.host | quote }}
-      http:
+    - http:
         paths:
           - path: {{ .Values.relay.ingress.path | quote }}
+            pathType: Prefix
             backend:
-              serviceName: {{ .Values.relay.name }}
-              servicePort: https
+              service:
+                name: {{ .Values.relay.name }}
+                port:
+                  number: {{ .Values.relay.service.port }}
