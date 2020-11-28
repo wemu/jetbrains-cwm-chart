@@ -7,7 +7,5 @@ spec:
   ports:
     - port: {{ .Values.lobby.service.port }}
       targetPort: {{ .Values.lobby.port }}
-      protocol: TCP
-      name: https
   selector:
     app: {{ .Values.lobby.name }}

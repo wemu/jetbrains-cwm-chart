@@ -8,7 +8,7 @@ spec:
     - http:
         paths:
           - path: {{ .Values.relay.ingress.path | quote }}
-            pathType: Prefix
+            pathType: Exact
             backend:
               service:
                 name: {{ .Values.relay.name }}
