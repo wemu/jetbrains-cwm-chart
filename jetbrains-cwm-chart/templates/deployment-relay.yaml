@@ -31,9 +31,9 @@ spec:
             {{- toYaml .Values.relay.resources | nindent 12 }}
           env:
             - name: RELAY_ADDR
-              value: "127.0.0.1:{{ .Values.relay.port }}"
+              value: ":{{ .Values.relay.port }}"
             - name: PROMETHEUS_ADDR
-              value: "127.0.0.1:4422"
+              value: ":4422"
             - name: ALLOW_SERVER_WITHOUT_AUTH
               # value: "-allow-server-without-authentication"
               value: ""
