@@ -5,10 +5,10 @@ metadata:
 spec:
   rules:
     - host: {{ .Values.lobby.ingress.host | quote }}
-    - http:
+      http:
         paths:
           - path: {{ .Values.lobby.ingress.path | quote }}
-            pathType: Exact
+            pathType: Prefix
             backend:
               service:
                 name: {{ .Values.lobby.name }}

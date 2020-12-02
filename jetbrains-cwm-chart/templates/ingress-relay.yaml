@@ -5,10 +5,10 @@ metadata:
 spec:
   rules:
     - host: {{ .Values.relay.ingress.host | quote }}
-    - http:
+      http:
         paths:
           - path: {{ .Values.relay.ingress.path | quote }}
-            pathType: Exact
+            pathType: Prefix
             backend:
               service:
                 name: {{ .Values.relay.name }}
