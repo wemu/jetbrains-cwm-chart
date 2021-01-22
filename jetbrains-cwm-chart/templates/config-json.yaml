@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.lobby.configMapName }}
+data:
+  config.json: |
+{{ tpl (.Files.Get "conf/config.json" | indent 4) . }}

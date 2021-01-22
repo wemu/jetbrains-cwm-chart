@@ -4,6 +4,7 @@ ARG BUILD_DIR="./build"
 
 COPY "${BUILD_DIR}/lobby" /home/lobby-server
 COPY "${BUILD_DIR}/lobby/lobby_private.pem" /home/lobby-server/lobby_private.pem
+COPY config.json /home/lobby-server/config/config.json
 
 RUN apt-get update && apt-get install -y unzip net-tools procps && apt-get clean
 
@@ -12,11 +13,11 @@ WORKDIR /home/lobby-server
 ENV JAVA_HOME /home/lobby-server/jbr
 ENV SERVER_PORT 2093
 ENV BASE_URL https://lobby.cwm.internal
-ENV ENABLED_FEATURES p2p_quic,direct_tcp,ws_relay
-ENV FORCE_RELAY_URI wss://relay.cwm.internal
+ENV ENABLED_FEATURES direct_tcp,ws_relay
 ENV RELAYS_ECDSA_JWT_KEY_FILE /home/lobby-server/lobby_private.pem
 ENV REDIS_HOST redis
 ENV REDIS_PORT 6379
 #ENV DIAGNOSTICS_PORT
+ENV CONFIG_JSON /home/lobby-server/config/config.json
 
 ENTRYPOINT ["bin/lobby-server"]

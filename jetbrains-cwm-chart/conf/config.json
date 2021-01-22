@@ -1,0 +1,12 @@
+{
+  "relays": [
+    {
+      "regionName": "internal",
+      "longitude": 0,
+      "latitude": 0,
+      "servers": [
+        "wss://{{ .Values.relay.ingress.host }}"
+      ]
+    }
+  ]
+}

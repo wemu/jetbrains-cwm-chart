@@ -1,0 +1,12 @@
+{
+  "relays": [
+    {
+      "regionName": "internal",
+      "latitude": 0,
+      "longitude": 0,
+      "servers": [
+        "wss://localhost"
+      ]
+    }
+  ]
+}

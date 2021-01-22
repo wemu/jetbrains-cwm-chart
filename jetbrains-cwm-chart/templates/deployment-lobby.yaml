@@ -20,6 +20,13 @@ spec:
         prometheus.io/port: "8880"
         prometheus.io/scheme: "http"
     spec:
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Values.lobby.configMapName }}
+          items:
+            - key: "config.json"
+              path: "config.json"
       containers:
         - name: {{ .Values.lobby.name }}
           image: "{{ .Values.lobby.image }}:{{ .Values.lobby.tag }}"
@@ -29,6 +36,9 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.lobby.resources | nindent 12 }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /home/lobby-server/config
           env:
             - name: SERVER_PORT
               value: "{{ .Values.lobby.port }}"
@@ -43,6 +53,8 @@ spec:
             - name: REDIS_PORT
               value: "{{ .Values.redis.service.port }}"
             - name: ENABLED_FEATURES
-              value: "p2p_quic,direct_tcp,ws_relay"
+              value: "direct_tcp,ws_relay"
             - name: BASE_URL
               value: "https://{{ .Values.lobby.ingress.host }}"
+            - name: CONFIG_JSON
+              value: "/home/lobby-server/config/config.json"

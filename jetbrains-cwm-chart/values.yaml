@@ -14,6 +14,7 @@ lobby:
     name: jetbrains-cwm-lobby
     host: cwm-lobby-test.local
     path: "/"
+  configMapName: jetbrains-cwm-lobby-config
 
 relay:
   name: jetbrains-cwm-relay
@@ -43,4 +44,3 @@ redis:
     port: 6379
     targetPort: 6379
   resources: {}
-
