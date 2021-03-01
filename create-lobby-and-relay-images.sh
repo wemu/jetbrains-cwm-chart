@@ -7,8 +7,11 @@ mkdir -p ${BUILD_DIR}/lobby
 mkdir -p ${BUILD_DIR}/relay
 
 
-LOBBY_SERVER_FILE=lobby-server-linux-x64.tar.gz
-RELAY_SERVER_FILE=ws-relayd
+LOBBY_SERVER_FILE=lobby-server-linux-x64.1400.tar.gz
+RELAY_SERVER_FILE=ws-relayd-linux-x64.1068.tar.gz
+
+LOBBY_VERSION=1400
+RELAY_VERSION=1068
 
 #
 # https://www.jetbrains.com/help/cwm/code-with-me-administration-guide.html
@@ -23,7 +26,7 @@ else
 fi
 
 if [ -f "${BUILD_DIR}/${RELAY_SERVER_FILE}" ]; then
-    echo "Relay Server file exists, will continue"
+    echo "Relay Server file exists, will continue..."
 else
     echo "Relay Server file missing."
     echo "Please download it from https://surveys.jetbrains.com/s3/code-with-me-server"
@@ -33,8 +36,12 @@ fi
 
 echo "extracting lobby tar file..."
 tar -C ${BUILD_DIR}/lobby -xf ${BUILD_DIR}/${LOBBY_SERVER_FILE}
-echo "coping relay executable..."
-cp ${BUILD_DIR}/${RELAY_SERVER_FILE} ${BUILD_DIR}/relay/${RELAY_SERVER_FILE}
+
+echo "extracting relay tar file..."
+tar -C ${BUILD_DIR}/relay -xf ${BUILD_DIR}/${RELAY_SERVER_FILE}
+# loving this already, relay tgz contains a versioned directory...
+echo "moving directory to a know location..."
+mv ${BUILD_DIR}/relay/ws-relayd-linux-x64.* ${BUILD_DIR}/relay/ws-relayd
 
 
 if [[ -f "${BUILD_DIR}/lobby/lobby_private.pem" || -f "${BUILD_DIR}/relay/lobby_public.pem" ]]; then
@@ -46,7 +53,6 @@ else
 fi
 
 
-docker build -t jetbrains/cwm/lobby:latest . -f Dockerfile.lobby
+docker build -t jetbrains/cwm/lobby:$LOBBY_VERSION . -f Dockerfile.lobby
 
-docker build -t jetbrains/cwm/relay:latest . -f Dockerfile.relay
-
+docker build -t jetbrains/cwm/relay:$RELAY_VERSION . -f Dockerfile.relay

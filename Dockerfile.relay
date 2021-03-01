@@ -2,7 +2,7 @@ FROM alpine:latest
 
 ARG BUILD_DIR="./build"
 
-COPY "${BUILD_DIR}/relay/ws-relayd" /ws-relayd
+COPY "${BUILD_DIR}/relay/ws-relayd/" /
 COPY "${BUILD_DIR}/relay/lobby_public.pem" /lobby_public.pem
 
 RUN chmod +x /ws-relayd
