@@ -1,3 +1,12 @@
+# Important Update
+
+***
+Starting on April 6, 2021, JetBrains will begin selling [Code With Me Enterprise](https://www.jetbrains.com/code-with-me/).
+***
+
+The download of the lobby and relay server is no longer possible. So this chart will be archived sooner or later. Probably sooner, like: tomorrow. Still: it was a nice experiment :)
+
+
 # Kubernetes Helm Chart for the Jetbrains Code With Me Plugin
 
 This repository contains some scripts to build docker images
