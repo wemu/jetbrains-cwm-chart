@@ -2,9 +2,11 @@
 
 ***
 Starting on April 6, 2021, JetBrains will begin selling [Code With Me Enterprise](https://www.jetbrains.com/code-with-me/).
+
+**There are [official helm charts and instructions for setting the relay and lobby server up on kubernetes](https://www.jetbrains.com/code-with-me/on-prem/).**
 ***
 
-The download of the lobby and relay server is no longer possible. So this chart will be archived sooner or later. Probably sooner, like: tomorrow. Still: it was a nice experiment :)
+This procject is no longer active.
 
 
 # Kubernetes Helm Chart for the Jetbrains Code With Me Plugin
